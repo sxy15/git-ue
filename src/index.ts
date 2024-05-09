@@ -69,4 +69,13 @@ program
     return rename(alias, newAlias);
   });
 
+program
+  .command('check')
+  .description('check git config')
+  .action(async () => {
+    const { check } = await import('./action/check.js');
+
+    return check();
+  });
+
 program.parse();
