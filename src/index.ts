@@ -70,6 +70,15 @@ program
   });
 
 program
+  .command('bind <alias>')
+  .description('bind current git remote to alias')
+  .action(async (alias) => {
+    const { bind } = await import('./action/bind.js');
+
+    return bind(alias);
+  });
+
+program
   .command('check')
   .description('check git config')
   .action(async () => {
