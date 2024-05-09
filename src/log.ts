@@ -9,6 +9,9 @@ const log = {
   },
   success: (message: string) => {
     console.log(chalk.green(message))
+  },
+  table: (data: any) => {
+    console.table(data)
   }
 }
 

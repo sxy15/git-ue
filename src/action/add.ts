@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import { log } from '../log.js';
+import { getConfig, setConfig } from '../util.js';
 import type { addType } from "../types.js";
 
 const { prompt } = inquirer;
@@ -30,9 +31,25 @@ export async function add(options: addType) {
 
   const _questions = questions.filter((item) => !opts[item.key as keyof addType])
 
-  await prompt(_questions).then((_answers) => {
-    const answers = {...opts, ..._answers};
+  const _answers = await prompt(_questions)
 
-    log.info(`alias: ${answers.alias} | name: ${answers.name} | email: ${answers.email}`);
-  })
+  const answers: Required<addType> = {...opts, ..._answers};
+
+  log.info(`alias: ${answers.alias} | name: ${answers.name} | email: ${answers.email}`);
+
+  const { config } = await getConfig();
+
+  if(config[answers.alias]) {
+    log.error(`alias ${answers.alias} already exists`);
+    return;
+  }
+
+  config[answers.alias] = {
+    name: answers.name,
+    email: answers.email
+  }
+
+  await setConfig(config);
+
+  log.success('add success');
 }

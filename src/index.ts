@@ -1,14 +1,11 @@
 #!/usr/bin/env node
-
 import { Command } from 'commander';
 import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-
-const pkg = require('../package.json');
-
 const program = new Command();
 
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
 const { version } = pkg
 
 program
@@ -25,6 +22,51 @@ program
     const { add } = await import('./action/add.js');
     
     return add(options);
+  });
+
+program
+  .command('current')
+  .description('show current user.name and user.email')
+  .action(async () => {
+    const { current } = await import('./action/current.js');
+
+    return current();
+  });
+
+program
+  .command('ls')
+  .description('show all alias')
+  .action(async () => {
+    const { ls } = await import('./action/ls.js');
+
+    return ls();
+  });
+
+program
+  .command('use [alias]')
+  .description('use alias config')
+  .action(async (alias) => {
+    const { use } = await import('./action/use.js');
+
+    return use(alias);
+  });
+
+program
+  .command('rm [alias]')
+  .description('remove alias config')
+  .action(async (alias) => {
+    const { rm } = await import('./action/rm.js');
+
+    return rm(alias);
+  });
+
+program
+  .command('rename [alias] [newAlias]')
+  .description('rename alias')
+  .action(async (alias, newAlias) => {
+    const { rename } = await import('./action/rename.js');
+
+    return rename(alias, newAlias);
   });
 
 program.parse();
