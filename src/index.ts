@@ -87,4 +87,13 @@ program
     return check();
   });
 
+program
+  .command('lsb')
+  .description('show the remote all bind')
+  .action(async () => {
+    const { lsb } = await import('./action/lsb.js');
+
+    return lsb();
+  });
+
 program.parse();
