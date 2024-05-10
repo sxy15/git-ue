@@ -27,5 +27,6 @@ Commands:
   rename [alias] [newAlias]  rename alias
   bind <alias>               bind current git remote to alias
   check                      check git config
+  lsb                        show the remote all bind
   help [command]             display help for command
 ```
