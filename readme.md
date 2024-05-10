@@ -30,3 +30,10 @@ Commands:
   lsb                        show the remote all bind
   help [command]             display help for command
 ```
+
+## husky Example
+
+hook -> pre-push
+```bash
+gum check
+```
