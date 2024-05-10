@@ -10,12 +10,23 @@ export async function check() {
   }
 
   const { remote = [] } = config[current];
+  const aliases = [];
 
   const { stdout: remoteStdout } = await execa`git remote -v`;
   const _remote = remoteStdout.split('\n')[1].split('\t')[1].split(' ')[0];
 
+  for(const alias in config) {
+    const { remote = [] } = config[alias];
+
+    if(remote.includes(_remote)) {
+      aliases.push(alias);
+    }
+  }
+
   if(!remote.includes(_remote)) {
-    log.error(`not bind -> alias: ${current} | remote: ${_remote}`);
+    log.error(`current alias: ${current}`);
+    log.info('your bind: ');
+    log.table(aliases);
     process.exit(1);
   }
 }
