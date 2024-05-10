@@ -1,6 +1,6 @@
 {
   "name": "git-ue-manager",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a tool for git switch user and email",
   "type": "module",
   "types": "./lib/types.d.ts",
